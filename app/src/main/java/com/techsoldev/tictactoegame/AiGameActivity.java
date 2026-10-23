@@ -378,7 +378,11 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        Minmax.Move bestMove = findBestMove(board);
+        // Determine which symbol the computer is playing.
+        char computerSymbol = (PICK_SIDE == 0) ? 'o' : 'x';
+
+        // Calculate the best move for the correct symbol.
+        Minmax.Move bestMove = findBestMove(board, computerSymbol);
 
         System.out.printf("The Optimal Move is :\n");
         System.out.printf("ROW: %d COL: %d\n\n",
