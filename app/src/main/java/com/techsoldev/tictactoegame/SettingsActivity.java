@@ -6,140 +6,54 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.tasks.Task;
 
-import javax.security.auth.Subject;
-
-
 public class SettingsActivity extends AppCompatActivity {
 
-    Switch vibrationSwitch;
-    Switch soundSwitch;
-
-    private LinearLayout rateUs,feedback ;
-
-    private ImageView backBtn;
+    private Switch vibrationSwitch;
+    private Switch soundSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide(); // hide the title bar
+            getSupportActionBar().hide();
         }
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+        this.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
         setContentView(R.layout.activity_settings);
 
+        vibrationSwitch = findViewById(R.id.vibration_switch);
+        soundSwitch = findViewById(R.id.sound_switch);
 
-         vibrationSwitch = (Switch)  findViewById(R.id.vibration_switch);
-         soundSwitch = (Switch)  findViewById(R.id.sound_switch);
+        ImageView backBtn = findViewById(R.id.settings_back_btn);
+        LinearLayout rateUs = findViewById(R.id.rate_us_layout);
+        LinearLayout feedback = findViewById(R.id.feedback_layout);
 
-         backBtn = (ImageView) findViewById(R.id.settings_back_btn);
-         rateUs = (LinearLayout) findViewById(R.id.rate_us_layout);
-         feedback = (LinearLayout) findViewById(R.id.feedback_layout);
+        vibrationSwitch.setChecked(MyServices.VIBRATION_CHECK);
+        vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> MyServices.VIBRATION_CHECK = isChecked);
 
-         if(MyServices.VIBRATION_CHECK)
-         {
-             vibrationSwitch.setChecked(true);
-         }
-         else if(!MyServices.VIBRATION_CHECK)
-         {
-             vibrationSwitch.setChecked(false);
-         }
+        soundSwitch.setChecked(MyServices.SOUND_CHECK);
+        soundSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> MyServices.SOUND_CHECK = isChecked);
 
+        backBtn.setOnClickListener(v -> onBackPressed());
 
+        rateUs.setOnClickListener(v -> askRatings());
 
-         vibrationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               if(isChecked)
-               {
-                   MyServices.VIBRATION_CHECK =true;
-               }
-               else {
-                   MyServices.VIBRATION_CHECK= false;
-               }
-            }
-
-        });
-
-
-
-        if(MyServices.SOUND_CHECK)
-        {
-            soundSwitch.setChecked(true);
-        }
-        else if(!MyServices.SOUND_CHECK)
-        {
-            soundSwitch.setChecked(false);
-        }
-
-
-       soundSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    MyServices.SOUND_CHECK =true;
-                }
-                else {
-                    MyServices.SOUND_CHECK= false;
-                }
-            }
-
-        });
-
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-
-        rateUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                askRatings();
-            }
-        });
-
-        feedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                composeEmail("Tic Tac Toe Feedback");
-
-               /*
-                try {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + "abdullahsh@hotmail.com"));
-
-                    intent.putExtra(Intent.EXTRA_TEXT, "your_text");
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    //TODO smth
-                }
-
-                */
-            }
-        });
-
+        feedback.setOnClickListener(v -> composeEmail("Tic Tac Toe Feedback"));
     }
 
     void askRatings() {
@@ -147,37 +61,20 @@ public class SettingsActivity extends AppCompatActivity {
         Task<ReviewInfo> request = manager.requestReviewFlow();
         request.addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                // We can get the ReviewInfo object
                 ReviewInfo reviewInfo = task.getResult();
-                Task<Void> flow = manager.launchReviewFlow(this, reviewInfo);
-                flow.addOnCompleteListener(task2 -> {
-                    // The flow has finished. The API does not indicate whether the user
-                    // reviewed or not, or even whether the review dialog was shown. Thus, no
-                    // matter the result, we continue our app flow.
-                });
-            } else  {
-
-                //Toast.makeText(getBaseContext(), "App does'nt uploaded on Play Store", Toast.LENGTH_SHORT).show();
-                // There was some problem, continue regardless of the result.
+                manager.launchReviewFlow(this, reviewInfo);
             }
         });
     }
 
-    public void composeEmail( String subject) {
+    public void composeEmail(String subject) {
         try {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:abdullahsh123@hotmail.com")); // only email apps should handle this
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        if (intent.resolveActivity(getPackageManager()) != null) {
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:abdullahsh123@hotmail.com"));
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
             startActivity(Intent.createChooser(intent, "Send feedback"));
-        }
         } catch (ActivityNotFoundException e) {
-            //TODO smth
+            // Handle activity not found
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

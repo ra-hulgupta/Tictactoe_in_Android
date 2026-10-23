@@ -355,13 +355,13 @@ public class OfflineGameActivity extends AppCompatActivity implements View.OnCli
 
                         if(PICK_SIDE ==0)
                         {
-                            playerOneWinCount=+1;
+                            playerOneWinCount += 1;
                             playerOneWins.setText(String.valueOf(playerOneWinCount));
                         }
                         if(PICK_SIDE ==1)
                         {
 
-                            playerTwoWinCount=+1;
+                            playerTwoWinCount += 1;
                             playerTwoWins.setText(String.valueOf(playerTwoWinCount));
                         }
 
@@ -436,13 +436,13 @@ public class OfflineGameActivity extends AppCompatActivity implements View.OnCli
                     {
                         if(PICK_SIDE ==0)
                         {
-                            playerTwoWinCount=+1;
+                            playerTwoWinCount += 1;
                             playerTwoWins.setText(String.valueOf(playerTwoWinCount));
 
                         }
                         if(PICK_SIDE ==1)
                         {
-                            playerOneWinCount=+1;
+                            playerOneWinCount += 1;
                             playerOneWins.setText(String.valueOf(playerOneWinCount));
 
                         }
