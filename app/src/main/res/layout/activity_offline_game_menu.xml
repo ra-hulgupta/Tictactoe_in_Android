@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FAFAFA"
+    android:background="#0F1123"
     tools:context=".OfflineGameMenuActivity">
 
     <LinearLayout
@@ -27,12 +27,10 @@
             android:fontFamily="@font/poppins_medium"
             android:text="Choose your play mode"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
-            android:textColor="#101010"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
-
             tools:alpha="1" />
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_choice1_offline_menu"
@@ -46,7 +44,7 @@
             android:text="With AI"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -60,10 +58,9 @@
             android:scaleY="0"
             android:text="With a friend"
             android:textAllCaps="false"
-            android:textColor="#FF3D00"
-            android:textSize="18dp"
+            android:textColor="#FF3B6B"
+            android:textSize="18sp"
             android:textStyle="bold" />
-
 
         <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view"
@@ -73,7 +70,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginBottom="30dp"
             android:elevation="4dp"
-            card_view:cardBackgroundColor="@color/white"
+            card_view:cardBackgroundColor="#1D1F38"
             card_view:cardCornerRadius="40dp">
 
             <pl.droidsonroids.gif.GifImageView
@@ -82,7 +79,6 @@
                 android:layout_height="match_parent"
                 android:padding="7.5dp"
                 android:src="@drawable/settings_gif" />
-
 
         </androidx.cardview.widget.CardView>
 

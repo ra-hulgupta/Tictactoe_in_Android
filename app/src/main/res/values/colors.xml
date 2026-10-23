@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF6200EE</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- Brand & Accent Colors -->
+    <color name="purple_200">#9153F8</color>
+    <color name="purple_500">#7D48F5</color>
+    <color name="purple_700">#5B24D0</color>
+    <color name="teal_200">#00F2FE</color>
+    <color name="teal_700">#02C3CC</color>
+
+    <!-- Gaming Theme Colors -->
+    <color name="bg_dark">#0F1123</color>
+    <color name="card_bg_dark">#1D1F38</color>
+    <color name="neon_cyan">#00F2FE</color>
+    <color name="neon_purple">#7D48F5</color>
+    <color name="neon_pink">#FF3B6B</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="text_secondary">#A0A6C0</color>
 </resources>
